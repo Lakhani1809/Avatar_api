@@ -26,25 +26,37 @@ POSE AND COMPOSITION:
 - Plain WHITE background only
 - Centered composition
 
-BEIGE BODYSUIT REQUIREMENTS:
-The avatar must wear a smooth, form-fitting beige/off-white bodysuit that covers:
-- Entire torso (chest, stomach, back)
-- Full shoulders
-- Upper arms (shoulder to elbow)
-- Full thighs and upper legs (waist to knees)
+BEIGE BODYSUIT REQUIREMENTS (SAME FOR ALL GENDERS - MALE AND FEMALE):
+The avatar must wear a MODEST, CONSERVATIVE beige/off-white bodysuit.
 
-The bodysuit must NOT cover (these areas show natural skin):
+MANDATORY COVERAGE (must be covered by the bodysuit for BOTH male and female):
+- Entire torso (chest, stomach, back) - FULLY COVERED
+- Full shoulders - FULLY COVERED
+- Upper arms from shoulder to elbow - FULLY COVERED
+- ENTIRE THIGHS from waist/hips down to the knees - FULLY COVERED
+- The bodysuit MUST extend down to the knees like shorts or capri pants
+- NO part of the thighs should be visible
+- This is NOT a swimsuit - thighs must be completely covered
+
+EXPOSED SKIN (these areas show natural skin):
 - Face (completely visible)
 - Neck (completely visible)
 - Forearms and hands (elbow to fingertips - visible skin)
-- Lower legs and feet (below knees to toes - visible skin)
+- Lower legs from knees to feet (calves, ankles, feet - visible skin)
+
+IMPORTANT FOR FEMALE AVATARS:
+- The bodysuit must cover the full thighs down to the knees
+- It must NOT look like a swimsuit, leotard, or one-piece bathing suit
+- Think of it as a modest short-sleeve top + knee-length shorts combined into one piece
+- The leg coverage must be the same as for male avatars
 
 BODYSUIT STYLE:
 - Solid neutral beige/off-white color
 - Single uniform color, no patterns, no variations
 - Smooth, clean fabric appearance
 - Form-fitting but not skin-tight
-- Like a modest, elegant Zara-style base layer
+- Modest and conservative coverage
+- Like cycling shorts + t-shirt combined into a single beige garment
 - Clean contours, no wrinkles or bunching
 
 STRICT RULES:
