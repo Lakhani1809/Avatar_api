@@ -1,15 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable standalone output for better Railway deployment
-  output: 'standalone',
-  
-  // Increase body size limit for image uploads (default is 1MB)
-  api: {
-    bodyParser: {
-      sizeLimit: '10mb',
-    },
-    responseLimit: false,
-  },
+  // Enable standalone output for better Railway deployment (production only)
+  ...(process.env.NODE_ENV === 'production' && { output: 'standalone' }),
   
   // Optimize images
   images: {

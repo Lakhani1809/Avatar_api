@@ -5,11 +5,13 @@ import { useState } from "react";
 type Status = "idle" | "loading" | "error" | "done";
 
 export default function AvatarTestPage() {
+  const [userId, setUserId] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [error, setError] = useState<string | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0];
@@ -21,12 +23,17 @@ export default function AvatarTestPage() {
     setFile(selected);
     setAvatarUrl(null);
     setError(null);
+    setSuccessMessage(null);
 
     const url = URL.createObjectURL(selected);
     setPreview(url);
   };
 
   const onSubmit = async () => {
+    if (!userId.trim()) {
+      setError("Please enter a User ID.");
+      return;
+    }
     if (!file) {
       setError("Please select an image first.");
       return;
@@ -34,8 +41,10 @@ export default function AvatarTestPage() {
     setStatus("loading");
     setError(null);
     setAvatarUrl(null);
+    setSuccessMessage(null);
 
     const form = new FormData();
+    form.append("user_id", userId.trim());
     form.append("image", file);
 
     try {
@@ -44,20 +53,16 @@ export default function AvatarTestPage() {
         body: form,
       });
 
+      const body = await res.json();
+
       if (!res.ok) {
-        const body = await res.json().catch(() => ({}));
         throw new Error(body.message || "Failed to generate avatar");
       }
 
-      const body = await res.json();
-      // Handle base64 response (for Railway deployment)
-      if (body.dataUrl) {
-        setAvatarUrl(body.dataUrl);
-      } else if (body.image) {
-        setAvatarUrl(`data:image/png;base64,${body.image}`);
-      } else if (body.avatarUrl) {
-        // Fallback for local development with file storage
-        setAvatarUrl(body.avatarUrl);
+      // Handle Supabase URL response
+      if (body.avatar_image_url) {
+        setAvatarUrl(body.avatar_image_url);
+        setSuccessMessage(`Avatar saved to Supabase Storage and user_profiles updated for user: ${body.user_id}`);
       }
       setStatus("done");
     } catch (err) {
@@ -72,8 +77,19 @@ export default function AvatarTestPage() {
         <h1 style={{ margin: 0 }}>Avatar Test</h1>
         <p style={{ color: "#444", marginTop: "0.35rem" }}>
           Upload a full-body photo to generate a clean fashion mannequin-style
-          avatar.
+          avatar. The avatar will be saved to Supabase Storage and linked to the user profile.
         </p>
+
+        <div style={styles.section}>
+          <label style={styles.label}>User ID (UUID)</label>
+          <input
+            type="text"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+            placeholder="e.g., 2126fc19-dfb6-46d0-b907-7484c581a2e2"
+            style={styles.input}
+          />
+        </div>
 
         <div style={styles.section}>
           <label style={styles.label}>Upload image</label>
@@ -92,13 +108,13 @@ export default function AvatarTestPage() {
         <button
           style={{
             ...styles.button,
-            opacity: status === "loading" ? 0.65 : 1,
+            opacity: status === "loading" || !userId.trim() || !file ? 0.65 : 1,
             cursor: status === "loading" ? "not-allowed" : "pointer",
           }}
           onClick={onSubmit}
           disabled={status === "loading"}
         >
-          {status === "loading" ? "Generating..." : "Generate Avatar"}
+          {status === "loading" ? "Generating & Uploading..." : "Generate Avatar"}
         </button>
 
         {status === "loading" && (
@@ -114,27 +130,25 @@ export default function AvatarTestPage() {
           </div>
         )}
 
+        {successMessage && (
+          <div style={styles.success} role="status">
+            {successMessage}
+          </div>
+        )}
+
         {avatarUrl && (
           <div style={styles.result}>
             <h2 style={{ margin: "0 0 0.5rem 0" }}>Generated Avatar</h2>
+            <p style={{ fontSize: "0.875rem", color: "#666", margin: 0, wordBreak: "break-all" }}>
+              <strong>Supabase URL:</strong> {avatarUrl}
+            </p>
             <img
               src={avatarUrl}
               alt="Generated avatar"
               style={{ maxWidth: "100%", borderRadius: 10 }}
             />
             <button
-              onClick={() => {
-                if (avatarUrl?.startsWith("data:")) {
-                  const link = document.createElement("a");
-                  link.href = avatarUrl;
-                  link.download = "avatar.png";
-                  document.body.appendChild(link);
-                  link.click();
-                  document.body.removeChild(link);
-                } else {
-                  window.open(avatarUrl || "", "_blank");
-                }
-              }}
+              onClick={() => window.open(avatarUrl || "", "_blank")}
               style={{
                 marginTop: "0.75rem",
                 padding: "0.65rem 1rem",
@@ -147,7 +161,7 @@ export default function AvatarTestPage() {
                 width: "fit-content",
               }}
             >
-              Download avatar (PNG)
+              Open in new tab
             </button>
           </div>
         )}
@@ -181,6 +195,14 @@ const styles: Record<string, React.CSSProperties> = {
   },
   label: {
     fontWeight: 600,
+  },
+  input: {
+    padding: "0.75rem 1rem",
+    border: "1px solid #e5e7eb",
+    borderRadius: 8,
+    fontSize: "1rem",
+    outline: "none",
+    transition: "border-color 150ms ease",
   },
   preview: {
     border: "1px solid #e5e7eb",
@@ -223,6 +245,14 @@ const styles: Record<string, React.CSSProperties> = {
     color: "#b91c1c",
     borderRadius: 10,
     border: "1px solid #fecdd3",
+  },
+  success: {
+    marginTop: "1rem",
+    padding: "0.75rem 1rem",
+    background: "#f0fdf4",
+    color: "#166534",
+    borderRadius: 10,
+    border: "1px solid #bbf7d0",
   },
   result: {
     marginTop: "1.5rem",

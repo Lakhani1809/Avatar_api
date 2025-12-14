@@ -10,7 +10,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "setup:supabase": "npx tsx scripts/setup-supabase.ts"
   },
   "keywords": [],
   "author": "",
@@ -18,6 +19,7 @@
   "description": "Avatar Generation API powered by Gemini Flash",
   "dependencies": {
     "@google/generative-ai": "^0.24.1",
+    "@supabase/supabase-js": "^2.87.1",
     "formidable": "^3.5.4",
     "next": "^16.0.8",
     "react": "^19.2.1",
