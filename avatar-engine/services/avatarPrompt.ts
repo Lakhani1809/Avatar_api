@@ -1,47 +1,67 @@
 export function buildAvatarPrompt(): string {
-  return `Generate a full-body human avatar based on THIS user. Preserve:
-- exact face
-- facial structure
-- skin tone
-- body proportions
-- gender expression
-- age appearance
-- identity
+  return `Generate a full-body human avatar based on THIS user's photo.
 
-Transform into a clean fashion mannequin-style avatar:
-- standing straight, front-facing A-pose or relaxed straight stance with slight arm gap
-- facing camera directly
-- full body visible (head to feet)
-- neutral relaxed arms
-- studio lighting
-- plain WHITE background only
+CRITICAL - PHOTOREALISM REQUIREMENT:
+- This MUST be a REAL PHOTOGRAPH of a REAL HUMAN BEING
+- ABSOLUTELY NO animation, cartoon, illustration, 3D render, digital art, painting, anime, CGI, or any artistic stylization
+- The output must look like an actual photograph taken with a professional camera
+- Real human skin texture, pores, natural imperfections
+- Real photographic lighting and shadows
+- If the result looks even slightly animated, cartoonish, or illustrated, it is WRONG
 
-Styling rules:
-- hyper-realistic human; absolutely no illustration, no cartoon, no 3D render, no painting, no stylization, no animation
-- professional studio body-shoot look; neutral, well-lit, magazine-model realism (not over-smoothed)
-- NO CLOTHING except a smooth Zara-style silhouette form
-- every avatar must wear the exact same neutral off-white/beige bodysuit (single color, no variations)
-- neck, hands, and feet must remain uncovered human skin and hyper-realistic, matching the person in the original image
-- elegant clean contours
-- anatomical accuracy
-- no accessories
-- no text
-- no poses
-- no gesture
-- no shadows that distort
-- no body modifications
-- do NOT idealize, slim, stretch, or alter the body shape — keep the user’s natural proportions exactly as in the source photo
-- face must remain extremely similar to the user; preserve facial structure and features; allow only a subtle, natural-friendly expression (soft hint of a smile) without changing the face
+PRESERVE FROM ORIGINAL PHOTO:
+- Exact face and facial structure (extremely important - face must be identical)
+- Exact skin tone and texture
+- Exact body proportions and shape
+- Gender expression
+- Age appearance
+- Complete identity of the person
 
-Output instructions:
-- full-body PNG
-- centered composition
-- preserve the user’s identity exactly
-- DO NOT change face or body
-- DO NOT hallucinate new features
-- DO NOT add clothing
-- DO NOT crop the body
-- maintain original skin tone faithfully.`;
+POSE AND COMPOSITION:
+- Standing straight, front-facing, relaxed A-pose with slight arm gap
+- Facing camera directly
+- Full body visible from head to feet
+- Arms relaxed at sides
+- Professional studio lighting
+- Plain WHITE background only
+- Centered composition
+
+BEIGE BODYSUIT REQUIREMENTS:
+The avatar must wear a smooth, form-fitting beige/off-white bodysuit that covers:
+- Entire torso (chest, stomach, back)
+- Full shoulders
+- Upper arms (shoulder to elbow)
+- Full thighs and upper legs (waist to knees)
+
+The bodysuit must NOT cover (these areas show natural skin):
+- Face (completely visible)
+- Neck (completely visible)
+- Forearms and hands (elbow to fingertips - visible skin)
+- Lower legs and feet (below knees to toes - visible skin)
+
+BODYSUIT STYLE:
+- Solid neutral beige/off-white color
+- Single uniform color, no patterns, no variations
+- Smooth, clean fabric appearance
+- Form-fitting but not skin-tight
+- Like a modest, elegant Zara-style base layer
+- Clean contours, no wrinkles or bunching
+
+STRICT RULES:
+- Do NOT idealize, slim, stretch, or alter body shape
+- Do NOT modify facial features
+- Do NOT add accessories, jewelry, or additional clothing
+- Do NOT add text or watermarks
+- Do NOT add artistic effects or filters
+- Do NOT crop any part of the body
+- Maintain anatomical accuracy
+- Maintain original skin tone faithfully on all visible skin areas
+
+OUTPUT:
+- Full-body PNG image
+- Professional fashion catalog quality
+- Photorealistic human being, NOT a digital creation
+- The person in the output must be recognizable as the same person from the input photo`;
 }
 
 export function buildVtoPrompt(): string {
