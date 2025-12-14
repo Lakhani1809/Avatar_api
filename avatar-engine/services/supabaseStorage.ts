@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { getSupabase } from "@/lib/supabase";
 
 const AVATAR_BUCKET = "avatars";
 
@@ -12,6 +12,7 @@ export async function uploadAvatarToStorage(
   userId: string,
   imageBuffer: Buffer
 ): Promise<string> {
+  const supabase = getSupabase();
   const fileName = `${userId}.png`;
   const filePath = fileName;
 
@@ -48,6 +49,7 @@ export async function updateUserProfileAvatar(
   userId: string,
   avatarUrl: string
 ): Promise<void> {
+  const supabase = getSupabase();
   const { error } = await supabase
     .from("user_profiles")
     .update({ avatar_image_url: avatarUrl })
@@ -66,6 +68,7 @@ export async function updateUserProfileAvatar(
  * @returns true if user exists, false otherwise
  */
 export async function userExists(userId: string): Promise<boolean> {
+  const supabase = getSupabase();
   const { data, error } = await supabase
     .from("user_profiles")
     .select("id")
