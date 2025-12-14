@@ -28,7 +28,7 @@ export async function uploadAvatarToStorage(
     throw new Error(`Failed to upload avatar to storage: ${error.message}`);
   }
 
-  // Get public URL
+  // Get public URL with cache-busting timestamp
   const {
     data: { publicUrl },
   } = supabase.storage.from(AVATAR_BUCKET).getPublicUrl(filePath);
@@ -37,7 +37,10 @@ export async function uploadAvatarToStorage(
     throw new Error("Failed to get public URL for uploaded avatar");
   }
 
-  return publicUrl;
+  // Add timestamp to bust browser/CDN cache when avatar is regenerated
+  const cacheBustedUrl = `${publicUrl}?t=${Date.now()}`;
+
+  return cacheBustedUrl;
 }
 
 /**
